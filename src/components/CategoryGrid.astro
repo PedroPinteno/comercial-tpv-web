@@ -1,0 +1,61 @@
+---
+export interface Category {
+  id: string;
+  name: string;
+  icon_url?: string;
+  color?: string;
+}
+const { categories = [], onSelect } = Astro.props as { categories: Category[]; onSelect?: (id: string) => void };
+---
+<style>
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px,1fr)); gap: 12px; }
+.card { 
+  border: 1px solid #e5e7eb; 
+  border-radius: 12px; 
+  padding: 16px; 
+  background: white; 
+  cursor: pointer; 
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  justify-content: center; 
+  min-height: 120px; 
+  border-left: 4px solid transparent;
+}
+.card:hover { 
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08); 
+}
+.icon { 
+  width: 64px; 
+  height: 64px; 
+  margin-bottom: 8px;
+  object-fit: contain;
+}
+.name { 
+  font-size: 14px; 
+  font-weight: 600; 
+  text-align: center; 
+  color: #1f2937;
+}
+</style>
+<div class="grid">
+  {categories.map((c) => (
+    <button 
+      class="card" 
+      style={{ borderLeftColor: c.color || '#e5e7eb' }} 
+      onClick={() => onSelect && onSelect(c.id)}
+    >
+      {c.icon_url ? (
+        <img 
+          class="icon" 
+          src={c.icon_url} 
+          alt={c.name}
+          loading="lazy"
+        />
+      ) : (
+        <div class="icon" style={{ color: c.color || '#111827' }}></div>
+      )}
+      <div class="name">{c.name}</div>
+    </button>
+  ))}
+</div>

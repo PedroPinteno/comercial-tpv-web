@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="50"
+   height="50"
+   viewBox="0 0 50 50"
+   fill="none"
+   version="1.1"
+   id="svg684"
+   sodipodi:docname="Vasos-de-carton-blanco-enfundado.svg"
+   inkscape:version="1.2.1 (9c6d41e410, 2022-07-14)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs688" />
+  <sodipodi:namedview
+     id="namedview686"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="12.512716"
+     inkscape:cx="18.101586"
+     inkscape:cy="23.056546"
+     inkscape:window-width="1920"
+     inkscape:window-height="1001"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg684" />
+  <g
+     id="g1285"
+     transform="translate(8.0243745,2.7177968)">
+    <path
+       d="M 30.8265,6.11682 H 3.17346 L 6.36553,40.4055 c 6.99287,1.6282 14.27597,1.6282 21.26577,0 l 3.192,-34.28868 z"
+       fill="#ffffff"
+       stroke="#1d1d1b"
+       stroke-miterlimit="10"
+       id="path680" />
+    <path
+       d="m 16.9984,9.29587 c 7.637,0 13.8281,-1.42332 13.8281,-3.17906 0,-1.75575 -6.1911,-3.17907 -13.8281,-3.17907 -7.63706,0 -13.82811,1.42332 -13.82811,3.17907 0,1.75574 6.19105,3.17906 13.82811,3.17906 z"
+       fill="#ffffff"
+       stroke="#1d1d1b"
+       stroke-miterlimit="10"
+       id="path682" />
+  </g>
+</svg>

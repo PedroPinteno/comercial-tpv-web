@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="120"
+   height="100"
+   viewBox="0 0 120 100"
+   fill="none"
+   version="1.1"
+   id="svg2861"
+   sodipodi:docname="Bolsas-de-papel-cerradas-anti-grasa.svg"
+   inkscape:version="1.2.1 (9c6d41e410, 2022-07-14)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs2865" />
+  <sodipodi:namedview
+     id="namedview2863"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="5.6527778"
+     inkscape:cx="37.769042"
+     inkscape:cy="36.176904"
+     inkscape:window-width="1920"
+     inkscape:window-height="1001"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2861" />
+  <g
+     id="g3596"
+     transform="translate(22.54684,14.45932)">
+    <path
+       d="m 66.993,35.8499 c 0,0 -21.1805,-7.5364 -24.753,-12.4804 C 38.6675,18.4255 30.4033,7.41211 30.4033,7.41211 L 4.41699,39.5852 44.983,68.5967 66.993,35.8543 Z"
+       stroke="#1d1d1b"
+       stroke-width="1.31"
+       stroke-miterlimit="10"
+       id="path2857" />
+    <path
+       d="m 66.9929,35.8501 3.6735,-10.7813 c 0,0 -7.9219,-6.2928 -15.0932,-11.2543 C 48.4018,8.84864 36.789,2.3457 36.789,2.3457 l -6.3858,5.0666"
+       stroke="#1d1d1b"
+       stroke-width="1.31"
+       stroke-miterlimit="10"
+       id="path2859" />
+  </g>
+</svg>

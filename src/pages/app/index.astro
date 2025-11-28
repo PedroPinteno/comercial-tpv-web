@@ -1,0 +1,30 @@
+---
+import AppShell from "@/layouts/AppShell.astro";
+import AppCategoriesClient from "@/components/AppCategoriesClient";
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TPV · Categorías</title>
+    <style>
+      body { 
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; 
+        background:#f0f2f5; 
+        margin:0; 
+        padding: 20px;
+      }
+      .sr-only { 
+        position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+        overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+      }
+    </style>
+  </head>
+  <body>
+    <AppShell title="TPV · Categorías">
+      <AppCategoriesClient client:load />
+    </AppShell>
+  </body>
+</html>

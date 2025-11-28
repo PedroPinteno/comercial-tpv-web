@@ -1,0 +1,47 @@
+---
+---
+
+<div class="company-bar">
+  <div class="company-bar-content">
+    <div class="company-logo" aria-hidden="true">logo</div>
+    <div class="company-name">Pedro Pinteño S.L.</div>
+  </div>
+</div>
+
+<style>
+  .company-bar { 
+    background: #111827;
+    padding: 0 16px;
+  }
+  .company-bar-content {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 0;
+    width: 100%;
+  }
+  .company-logo {
+    width:56px;
+    height:56px;
+    border-radius:10px;
+    background:#fff;
+    color:#111827;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:700;
+    font-size:16px;
+  }
+  .company-name {
+    font-weight:600;
+    font-size:16px;
+    color:#ffffff;
+  }
+  @media (max-width: 420px) {
+    .company-bar { padding:12px 14px; }
+    .company-logo { width:36px; height:36px; font-size:13px; border-radius:8px; }
+    .company-name { font-size:14px; }
+  }
+</style>
