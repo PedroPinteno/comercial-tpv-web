@@ -1,18 +1,11 @@
 ---
+import AppShell from "@/layouts/AppShell.astro";
 import LoginFormClient from "@/components/LoginFormClient";
 import "@/styles/login.css";
 ---
 
-<!doctype html>
-<html lang="es">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Login · Comercial TPV</title>
-  </head>
-
-  <body>
+<AppShell title="Login · Comercial TPV" showBars={false}>
+  <main class="login-page">
     <LoginFormClient client:load />
-  </body>
-</html>
-
+  </main>
+</AppShell>

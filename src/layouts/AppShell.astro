@@ -1,41 +1,35 @@
 ---
 import CompanyBar from "@/components/layout/CompanyBar.astro";
 import HeaderBar from "@/components/layout/HeaderBar.astro";
+import "@/styles/theme.css";
 
-const { title = "TPV" } = Astro.props as { title?: string };
+interface Props {
+  title?: string;
+  showBars?: boolean;
+}
+
+const { title = "Comercial TPV", showBars = true } = Astro.props as Props;
 ---
 
-<div class="page" aria-label={title}>
-  <div class="main-container">
-    <CompanyBar />
-    <HeaderBar />
-    <div class="container">
-      <slot />
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <div class="app-root">
+      {showBars && (
+        <>
+          <CompanyBar />
+          <HeaderBar />
+        </>
+      )}
+
+      <main class="app-main">
+        <slot />
+      </main>
     </div>
-  </div>
-</div>
-
-<style>
-  .page {
-    display: flex;
-    justify-content: center;
-  }
-
-  .main-container {
-    max-width: 800px;
-    margin: 0 auto;
-    width: 100%;
-    box-shadow: 0 0 15px rgba(0,0,0,0.1);
-    border-radius: 8px;
-    overflow: hidden;
-    background: #fff;
-  }
-
-  .container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 16px;
-    min-height: calc(100vh - 140px);
-    border-radius: 0 0 8px 8px;
-  }
-</style>
+  </body>
+</html>
