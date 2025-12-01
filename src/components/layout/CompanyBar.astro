@@ -10,17 +10,21 @@
 
 <style>
   .company-bar { 
-    background: #111827;
-    padding: 0 16px;
+    background: transparent;
+    display: flex;
+    justify-content: center;
+    padding: 0 12px;
   }
   .company-bar-content {
-    max-width: 800px;
+    max-width: min(1100px, 80vw);
+    width: 100%;
     margin: 0 auto;
     display: flex;
     align-items: center;
     gap: 16px;
-    padding: 20px 0;
-    width: 100%;
+    padding: 20px 16px;
+    background: #111827;
+    border-radius: 12px;
   }
   .company-logo {
     width:56px;

@@ -1,4 +1,3 @@
-// src/components/LoginFormClient.tsx
 import { FormEvent, useEffect, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
 
@@ -63,8 +62,6 @@ export default function LoginFormClient() {
 
   return (
     <form className="card" onSubmit={handleSubmit}>
-      <h1>Acceder</h1>
-
       <label htmlFor="email">Email</label>
       <input
         id="email"

@@ -6,9 +6,10 @@ import "@/styles/theme.css";
 interface Props {
   title?: string;
   showBars?: boolean;
+  showSearch?: boolean;
 }
 
-const { title = "Comercial TPV", showBars = true } = Astro.props as Props;
+const { title = "Comercial TPV", showBars = true, showSearch = true } = Astro.props as Props;
 ---
 
 <!doctype html>
@@ -23,7 +24,7 @@ const { title = "Comercial TPV", showBars = true } = Astro.props as Props;
       {showBars && (
         <>
           <CompanyBar />
-          <HeaderBar />
+          <HeaderBar showSearch={showSearch} />
         </>
       )}
 
@@ -31,5 +32,27 @@ const { title = "Comercial TPV", showBars = true } = Astro.props as Props;
         <slot />
       </main>
     </div>
+    <style>
+      :global(body) {
+        margin: 0;
+        background: var(--color-bg-page, #f9fafb);
+        font-family: var(--font-sans, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif);
+      }
+      .app-root {
+        min-height: 100vh;
+      }
+      .app-main {
+        width: min(1100px, 80vw);
+        margin: 0 auto;
+        padding: 16px;
+        box-sizing: border-box;
+      }
+      @media (max-width: 768px) {
+        .app-main {
+          padding: 12px;
+          max-width: 100%;
+        }
+      }
+    </style>
   </body>
 </html>

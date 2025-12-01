@@ -1,6 +1,5 @@
 // src/components/SearchClient.tsx
-// Ignoramos tipos para no pelear con TypeScript con código DOM “puro”.
-// Todo este código es prácticamente el mismo que tenías en <script type="module">.
+// DOM imperativo conservado para corresponder al markup actual. Se desactiva TS para no pelear con tipos del DOM.
 // @ts-nocheck
 
 import { useEffect } from "react";
@@ -8,8 +7,6 @@ import { supabase } from "@/lib/supabaseClient";
 
 export default function SearchClient() {
   useEffect(() => {
-    console.log("[SearchClient] script loaded (SearchClient)");
-
     const $ = (s) => document.querySelector(s);
 
     const resultsEl = $("#results");
@@ -17,174 +14,66 @@ export default function SearchClient() {
     const qEl = $("#q");
     const btnSearch = $("#btnSearch");
     const logoutBtn = $("#logout");
+    const selectedCatEl = $("#selectedCategory");
 
-    // Logout handler
-    logoutBtn?.addEventListener("click", async () => {
+    const logoutHandler = async () => {
       await supabase.auth.signOut();
       window.location.href = "/login";
-    });
+    };
 
-    // Parámetros de la URL
+    logoutBtn?.addEventListener("click", logoutHandler);
+
     const params = new URLSearchParams(window.location.search);
     const initialQ = params.get("q") || "";
     const category = params.get("c") || "";
+    const categoryName = params.get("name") || "";
+    const fromLens = params.get("from") === "lens";
+    const isBagCategory =
+      category === "bags" ||
+      categoryName.toLowerCase().includes("bolsa");
+
     if (qEl) {
       qEl.value = initialQ;
     }
-
-    function createCalcCard(title, type) {
-      const wrap = document.createElement("div");
-      wrap.style.border = "1px solid #e5e7eb";
-      wrap.style.borderRadius = "12px";
-      wrap.style.background = "#fff";
-      wrap.style.padding = "16px";
-      wrap.style.marginBottom = "12px";
-
-      const h = document.createElement("h3");
-      h.textContent = title;
-      h.style.margin = "0 0 12px";
-
-      const form = document.createElement("div");
-      form.style.display = "grid";
-      form.style.gridTemplateColumns = "repeat(auto-fill, minmax(140px, 1fr))";
-      form.style.gap = "8px";
-
-      const ancho = document.createElement("input");
-      ancho.type = "number";
-      ancho.placeholder = "Ancho (cm)";
-      ancho.min = "0";
-
-      const alto = document.createElement("input");
-      alto.type = "number";
-      alto.placeholder = "Alto (cm)";
-      alto.min = "0";
-
-      const galga = document.createElement("input");
-      galga.type = "number";
-      galga.placeholder = "Galga";
-      galga.min = "0";
-
-      const uds = document.createElement("input");
-      uds.type = "number";
-      uds.placeholder = "Unidades";
-      uds.min = "1";
-
-      const modalidad = document.createElement("select");
-      modalidad.innerHTML =
-        '<option value="anonima">Anónima</option><option value="impresa">Personalizada</option>';
-
-      const tintasSel = document.createElement("select");
-      tintasSel.innerHTML =
-        '<option value="1">1 tinta</option><option value="2">2 tintas</option><option value="3">3 tintas</option>';
-      tintasSel.style.display = "none";
-
-      const carasSel = document.createElement("select");
-      carasSel.innerHTML =
-        '<option value="1">1 cara</option><option value="2">2 caras</option>';
-      carasSel.style.display = "none";
-
-      const btn = document.createElement("button");
-      btn.className = "btn";
-      btn.textContent = "Calcular";
-      btn.style.width = "120px";
-
-      const out = document.createElement("div");
-      out.className = "price";
-      out.style.marginTop = "8px";
-      out.style.display = "none";
-
-      if (type === "b_densidad" || type === "camiseta") {
-        form.append(
-          ancho,
-          alto,
-          galga,
-          uds,
-          modalidad,
-          tintasSel,
-          carasSel,
-          btn
-        );
-
-        const togglePrintFields = () => {
-          const isImpresa = modalidad.value === "impresa";
-          tintasSel.style.display = isImpresa ? "" : "none";
-          carasSel.style.display = isImpresa ? "" : "none";
-        };
-        modalidad.addEventListener("change", togglePrintFields);
-        togglePrintFields();
-      } else {
-        form.append(ancho, alto, galga, uds, btn);
-      }
-
-      wrap.append(h, form, out);
-
-      btn.addEventListener("click", async () => {
-        out.style.display = "block";
-        out.textContent = "Calculando…";
-        try {
-          const payload = {
-            type,
-            width_cm: Number(ancho.value || 0),
-            height_cm: Number(alto.value || 0),
-            gauge: Number(galga.value || 0),
-            units: Number(uds.value || 0),
-            print_type:
-              type === "b_densidad" || type === "camiseta"
-                ? modalidad.value || "anonima"
-                : undefined,
-            tintas:
-              (type === "b_densidad" || type === "camiseta") &&
-              modalidad.value === "impresa"
-                ? Number(tintasSel.value || 1)
-                : undefined,
-            caras:
-              (type === "b_densidad" || type === "camiseta") &&
-              modalidad.value === "impresa"
-                ? Number(carasSel.value || 1)
-                : undefined,
-          };
-
-          const { data, error } = await supabase.functions.invoke(
-            "calc-bag",
-            { body: payload }
-          );
-          if (error) throw error;
-
-          const kgTxt = (data.kg || 0).toFixed(3) + " kg";
-          const priceTxt =
-            (data.price_final?.toFixed
-              ? data.price_final.toFixed(2)
-              : data.price_final) +
-            " " +
-            (data.currency || "");
-          out.textContent = `Kilos estimados: ${kgTxt} · Cotización: ${priceTxt}`;
-        } catch (e) {
-          out.textContent = "Error en el cálculo";
-        }
-      });
-
-      return wrap;
+    if (fromLens) {
+      document.querySelector(".search")?.classList.add("reveal-search");
+    }
+    if (categoryName && selectedCatEl) {
+      selectedCatEl.textContent = `Categoría seleccionada: ${categoryName}`;
+      selectedCatEl.classList.remove("hidden");
     }
 
-    function renderBagsCalc() {
+    function renderBagOptions() {
       if (!resultsEl) return;
       resultsEl.innerHTML = "";
       const grid = document.createElement("div");
-      grid.style.display = "grid";
-      grid.style.gridTemplateColumns = "1fr";
-      grid.style.gap = "12px";
-
-      grid.append(
-        createCalcCard("Camiseta", "camiseta"),
-        createCalcCard("B.B. especiales", "bb_especiales"),
-        createCalcCard("B. Densidad", "b_densidad")
-      );
+      grid.className = "bag-grid";
+      const options = [
+        { title: "Camiseta" },
+        { title: "Papel" },
+        { title: "Vacío" },
+      ];
+      options.forEach((opt) => {
+        const card = document.createElement("button");
+        card.className = "bag-card";
+        card.textContent = opt.title;
+        card.addEventListener("click", () => {
+          // Placeholder: navegación o lógica guiada pendiente
+        });
+        grid.appendChild(card);
+      });
       resultsEl.appendChild(grid);
     }
 
-    // Si la categoría es 'bags', activamos el modo cálculo en vez de la lista de resultados
-    if (category === "bags") {
-      renderBagsCalc();
+    // Si la categoría es 'Bolsas', mostramos las 3 opciones guiadas
+    if (isBagCategory) {
+      resultsEl?.classList.add("bag-mode");
+      renderBagOptions();
+    }
+
+    let hasSearched = isBagCategory;
+    if (!hasSearched) {
+      resultsEl?.classList.add("hidden");
     }
 
     function render(items) {
@@ -281,6 +170,8 @@ export default function SearchClient() {
           { body }
         );
         if (error) throw error;
+        hasSearched = true;
+        resultsEl?.classList.remove("hidden");
         render(data.items || []);
       } catch (e) {
         if (errorEl) {
@@ -290,19 +181,23 @@ export default function SearchClient() {
       }
     }
 
-    if (category === "bags") {
-      // En modo Bolsas usamos las 3 cards de cálculo y no se hace búsqueda ni se muestra la barra
+    const searchHandler = () => {
+      if (!qEl) return;
+      search(qEl.value);
+    };
+
+    if (isBagCategory) {
       document.querySelector(".search")?.classList.add("hidden");
     } else {
-      btnSearch?.addEventListener("click", () => {
-        if (!qEl) return;
-        search(qEl.value);
-      });
+      btnSearch?.addEventListener("click", searchHandler);
       if (initialQ) search(initialQ);
-      else search("");
     }
+
+    return () => {
+      logoutBtn?.removeEventListener("click", logoutHandler);
+      btnSearch?.removeEventListener("click", searchHandler);
+    };
   }, []);
 
-  // No pintamos nada: este componente solo ejecuta la lógica en el cliente.
   return null;
 }

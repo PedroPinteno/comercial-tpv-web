@@ -1,17 +1,19 @@
 ---
-const { title = 'Consulta de tarifas' } = Astro.props as { title?: string };
+const { title = 'Consulta de tarifas', showSearch = true } = Astro.props as { title?: string; showSearch?: boolean };
 ---
 
 <div class="header-container">
   <header>
     <div class="title">{title}</div>
     <div class="header-actions">
-      <button id="btnSearchToggle" class="btn btn-icon" aria-label="Buscar">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="11" cy="11" r="8"></circle>
-          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-        </svg>
-      </button>
+      {showSearch && (
+        <button id="btnSearchToggle" class="btn btn-icon" aria-label="Buscar">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </button>
+      )}
       <button id="logout" class="btn">Salir</button>
     </div>
   </header>
@@ -23,7 +25,7 @@ const { title = 'Consulta de tarifas' } = Astro.props as { title?: string };
     border-bottom: 1px solid #e5e7eb;
   }
   header { 
-    max-width: 800px;
+    max-width: min(1100px, 80vw);
     margin: 0 auto;
     display: flex; 
     justify-content: space-between; 

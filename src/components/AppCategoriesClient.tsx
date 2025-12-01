@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { supabase } from '@/lib/supabaseClient';
+import { useEffect, useState } from "react";
+import { supabase } from "@/lib/supabaseClient";
 
 export interface Category {
   id: string;
@@ -14,19 +14,41 @@ export default function AppCategoriesClient() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const logoutBtn = document.getElementById("logout");
+    const searchBtn = document.getElementById("btnSearchToggle");
+
+    const handleLogout = async () => {
+      await supabase.auth.signOut();
+      window.location.href = "/login";
+    };
+
+    const handleSearch = () => {
+      window.location.href = "/app/search?from=lens";
+    };
+
+    logoutBtn?.addEventListener("click", handleLogout);
+    searchBtn?.addEventListener("click", handleSearch);
+
+    return () => {
+      logoutBtn?.removeEventListener("click", handleLogout);
+      searchBtn?.removeEventListener("click", handleSearch);
+    };
+  }, []);
+
+  useEffect(() => {
     const load = async () => {
       try {
         const { data: sessionData } = await supabase.auth.getSession();
         if (!sessionData.session) {
-          window.location.href = '/login';
+          window.location.href = "/login";
           return;
         }
-        const { data, error } = await supabase.functions.invoke('list-categories', { body: {} });
+        const { data, error } = await supabase.functions.invoke("list-categories", { body: {} });
         if (error) throw error;
         setCategories((data as any)?.items ?? []);
       } catch (e) {
-        console.error('[AppCategoriesClient] load error', e);
-        setError('Error cargando categorías');
+        console.error("[AppCategoriesClient] load error", e);
+        setError("Error cargando categorías");
       } finally {
         setLoading(false);
       }
@@ -35,8 +57,8 @@ export default function AppCategoriesClient() {
   }, []);
 
   const handleCategoryClick = (c: Category) => {
-    const p = new URLSearchParams({ c: c.id });
-    window.location.href = '/app/search?' + p.toString();
+    const p = new URLSearchParams({ c: c.id, name: c.name });
+    window.location.href = "/app/search?" + p.toString();
   };
 
   if (loading) {
@@ -51,17 +73,29 @@ export default function AppCategoriesClient() {
     <div
       className="grid"
       style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(3, minmax(140px, 1fr))',
+        display: "grid",
+        gridTemplateColumns: "repeat(3, minmax(140px, 1fr))",
         gap: 12,
-        justifyContent: 'center',
+        justifyContent: "center",
       }}
     >
       {categories.map((c) => (
         <button
           key={c.id}
           className="card"
-          style={{ border: '1px solid ' + (c.color || '#e5e7eb'), borderRadius: 12, padding: 16, background: '#fff', cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: 120 }}
+          style={{
+            border: "1px solid " + (c.color || "#e5e7eb"),
+            borderRadius: 12,
+            padding: 16,
+            background: "#fff",
+            cursor: "pointer",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            minHeight: 120,
+            borderLeft: "4px solid " + (c.color || "#e5e7eb"),
+          }}
           aria-label={c.name}
           onClick={() => handleCategoryClick(c)}
         >
@@ -70,10 +104,10 @@ export default function AppCategoriesClient() {
               className="icon"
               src={c.icon_url}
               alt={c.name}
-              style={{ width: 64, height: 64, marginBottom: 8, objectFit: 'contain' }}
+              style={{ width: 64, height: 64, marginBottom: 8, objectFit: "contain" }}
             />
           )}
-          <span className="sr-only">{c.name}</span>
+          <div style={{ marginTop: 6, fontWeight: 600, color: "#111827" }}>{c.name}</div>
         </button>
       ))}
     </div>
